@@ -88,12 +88,12 @@ class ClashService extends GetxService {
 
   @override
   void onClose() {
-    Get.printInfo(info: 'fclash: closing daemon');
-    _clashProcess?.kill();
+    closeClashDaemon();
     super.onClose();
   }
 
   void closeClashDaemon() {
+    Get.printInfo(info: 'fclash: closing daemon');
     _clashProcess?.kill();
   }
 }

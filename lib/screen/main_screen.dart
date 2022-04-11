@@ -26,11 +26,6 @@ class _MainScreenState extends State<MainScreen>
   }
 
   @override
-  void onWindowClose() {
-    super.onWindowClose();
-  }
-
-  @override
   void onTrayIconMouseDown() {
     windowManager.show();
   }
@@ -40,6 +35,7 @@ class _MainScreenState extends State<MainScreen>
     switch (menuItem.key) {
       case 'exit':
         windowManager.close().then((value) {
+          Get.find<ClashService>().closeClashDaemon();
           exit(0);
         });
         break;
