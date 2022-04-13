@@ -229,7 +229,7 @@ packages:
       name: flutter_blurhash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.4"
+    version: "0.6.6"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -397,9 +397,9 @@ packages:
   kommon:
     dependency: "direct main"
     description:
-      name: kommon
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../kommon-flutter"
+      relative: true
+    source: path
     version: "0.2.1-dev.1"
   lints:
     dependency: transitive
@@ -457,6 +457,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  oktoast:
+    dependency: transitive
+    description:
+      name: oktoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.5"
   path:
     dependency: "direct main"
     description:
@@ -632,6 +639,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
+  settings_ui:
+    dependency: "direct main"
+    description:
+      name: settings_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   shared_preferences:
     dependency: transitive
     description:

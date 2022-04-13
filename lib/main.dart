@@ -7,7 +7,7 @@ import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initAppService();
+  await initAppService();
   runApp(const MyApp());
   initAppTray();
 }
@@ -32,6 +32,7 @@ Future<void> initAppService() async {
   await windowManager.setPreventClose(true);
   await SpUtil.getInstance();
   await Get.putAsync(() => ClashService().init());
+  await Get.putAsync(() => DialogService().init());
 }
 
 class MyApp extends StatelessWidget {
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Fclash',
       theme: ThemeData(
         primarySwatch: Colors.blue,
