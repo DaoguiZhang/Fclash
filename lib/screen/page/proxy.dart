@@ -18,14 +18,29 @@ class _ProxyState extends State<Proxy> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Obx(() => BrnNoticeBar(
-            content:
-                'Current using: ${Get.find<ClashService>().currentYaml.value}')),
-        Expanded(child: Obx(() => buildTiles()))
-      ],
+    return Container(
+      decoration: BoxDecoration(color: Colors.white),
+      child: Stack(
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Obx(() => BrnNoticeBar(
+                  content:
+                      'Current using: ${Get.find<ClashService>().currentYaml.value}')),
+              Expanded(child: Obx(() => buildTiles()))
+            ],
+          ),
+          Opacity(
+              opacity: 0.4,
+              child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Image.asset(
+                    "assets/images/network.png",
+                    width: 300,
+                  )))
+        ],
+      ),
     );
   }
 

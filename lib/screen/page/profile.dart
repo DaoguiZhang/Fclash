@@ -52,11 +52,16 @@ class _ProfileState extends State<Profile> {
                   decoration: BoxDecoration(
                       color:
                           Get.find<ClashService>().currentYaml.value == filename
-                              ? Colors.blueAccent
+                              ? Colors.lightBlueAccent.withOpacity(0.4)
                               : Colors.transparent),
                   padding: const EdgeInsets.all(20),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Image.asset(
+                        "assets/images/rocket.png",
+                        width: 50,
+                      ),
                       Expanded(
                           child: Text(
                         basename(
@@ -74,7 +79,27 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  void _addProfile() {}
+  void _addProfile() {
+    Get.find<DialogService>().inputDialog(
+        title: "input a valid subscription link url",
+        onText: (txt) async {
+          Future.delayed(Duration.zero, () {
+            Get.find<DialogService>().inputDialog(
+                title: "What is your config name",
+                onText: (name) async {
+                  Future.delayed(Duration.zero, () async {
+                    try {
+                      BrnLoadingDialog.show(Get.context!,
+                          content: '', barrierDismissible: false);
+                      await Get.find<ClashService>().addProfile(name, txt);
+                    } finally {
+                      BrnLoadingDialog.dismiss(Get.context!);
+                    }
+                  });
+                });
+          });
+        });
+  }
 
   handleProfileClicked(FileSystemEntity config, bool isInUse) {
     Get.bottomSheet(BrnCommonActionSheet(
@@ -83,7 +108,9 @@ class _ProfileState extends State<Profile> {
         BrnCommonActionSheetItem('set to default profile',
             desc:
                 isInUse ? "already default profile" : "switch to this profile"),
-        BrnCommonActionSheetItem('DELETE', desc: "delete this profile"),
+        BrnCommonActionSheetItem('DELETE',
+            desc: "delete this profile",
+            actionStyle: BrnCommonActionSheetItemStyle.alert),
       ],
       cancelTitle: 'Cancel',
       onItemClickInterceptor: (index, a) {
@@ -104,15 +131,17 @@ class _ProfileState extends State<Profile> {
             break;
           case 1:
             if (isInUse) {
-              Get.dialog(BrnDialog(
-                titleText: "You can't delete a profile which is in use!",
-                contentWidget: Center(
-                    child:
-                        const Text('Please switch to another profile first.')),
-                actionsText: ["OK"],
-              ));
+              Future.delayed(Duration.zero, () {
+                Get.dialog(BrnDialog(
+                  titleText: "You can't delete a profile which is in use!",
+                  contentWidget: Center(
+                      child: const Text(
+                          'Please switch to another profile first.')),
+                  actionsText: ["OK"],
+                ));
+              });
             } else {
-              Get.find<ClashService>().deleteYaml(config);
+              Get.find<ClashService>().deleteProfile(config);
             }
             break;
         }

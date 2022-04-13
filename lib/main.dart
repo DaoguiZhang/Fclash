@@ -12,7 +12,7 @@ void main() async {
   initAppTray();
 }
 
-void initAppTray() async {
+void initAppTray({List<MenuItem>? details}) async {
   await trayManager.setIcon('assets/images/app_tray.jpeg');
   List<MenuItem> items = [
     MenuItem(
@@ -25,6 +25,9 @@ void initAppTray() async {
       title: 'Exit Fclash',
     ),
   ];
+  if (details != null) {
+    items.insertAll(0, details);
+  }
   await trayManager.setContextMenu(items);
 }
 

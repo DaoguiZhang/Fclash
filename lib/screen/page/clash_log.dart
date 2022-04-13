@@ -27,7 +27,7 @@ class _ClashLogState extends State<ClashLog> {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (streamSubscription == null) {
         if (Get.find<ClashService>().logStream == null) {
-          printInfo(info: 'clash log stream not opened');
+          // printInfo(info: 'clash log stream not opened');
         }
         streamSubscription =
             Get.find<ClashService>().logStream?.listen((event) {
@@ -38,7 +38,7 @@ class _ClashLogState extends State<ClashLog> {
           }
         });
         if (streamSubscription == null) {
-          printInfo(info: 'log service retry');
+          // printInfo(info: 'log service retry');
         } else {
           printInfo(info: 'log service connected');
           connected.value = true;
@@ -75,14 +75,13 @@ class _ClashLogState extends State<ClashLog> {
         ),
         Expanded(
           child: Container(
-            decoration: const BoxDecoration(color: Colors.black12),
+            decoration: const BoxDecoration(color: Colors.white70),
             child: Obx(() => ListView.builder(
                   itemBuilder: (cxt, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         logs[index],
-                        style: const TextStyle(fontSize: 24),
                       ),
                     );
                   },

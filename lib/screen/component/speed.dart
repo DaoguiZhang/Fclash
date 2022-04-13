@@ -15,7 +15,10 @@ class SpeedWidget extends StatelessWidget {
               itemChildren: [
                 BrnNumberInfoItemModel(
                     preDesc: "Download ",
-                    number: Get.find<ClashService>().downRate.value.toString(),
+                    number: Get.find<ClashService>()
+                        .downRate
+                        .value
+                        .toStringAsFixed(1),
                     lastDesc: "KB/s"),
               ],
               rowCount: 4,
@@ -26,8 +29,10 @@ class SpeedWidget extends StatelessWidget {
               itemChildren: [
                 BrnNumberInfoItemModel(
                     preDesc: "Upload ",
-                    number:
-                        Get.find<ClashService>().uploadRate.value.toString(),
+                    number: Get.find<ClashService>()
+                        .uploadRate
+                        .value
+                        .toStringAsFixed(1),
                     lastDesc: "KB/s"),
               ],
               rowCount: 4,
