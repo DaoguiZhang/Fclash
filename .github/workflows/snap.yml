@@ -18,7 +18,7 @@ jobs:
         id: build
 
       - uses: snapcore/action-publish@v1
-          with:
-            store_login: ${{ secrets.SNAP_TOKEN }}
-            snap: ${{ steps.build.outputs.snap }}
-            release: latest/edge
+        with:
+          store_login: ${{ secrets.SNAP_TOKEN }}
+          snap: ${{ steps.build.outputs.snap }}
+          release: latest/edge
