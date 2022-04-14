@@ -1,5 +1,5 @@
 name: fclash
-base: core20
+base: core18
 version: '1.0'
 summary: A Linux Clash Proxy Fronted based on Clash # 79 char long summary
 description: |

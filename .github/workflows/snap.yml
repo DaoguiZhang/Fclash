@@ -1,0 +1,19 @@
+name: Snap Package
+
+on: push
+
+jobs:
+  my-job:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Use Snapcraft
+        uses: snapcore/action-build@v1
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: fclash.snap
+          path: ${{ steps.snapcraft.outputs.snap }}
