@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:fclash/service/clash_service.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,11 @@ class _ClashLogState extends State<ClashLog> {
         }
         streamSubscription =
             Get.find<ClashService>().logStream?.listen((event) {
-          Get.printInfo(info: 'Log widget: ${String.fromCharCodes(event)}');
-          logs.add(String.fromCharCodes(event));
+          final logStr = String.fromCharCodes(event);
+          Get.printInfo(info: 'Log widget: ${logStr}');
+          logs.insert(0, logStr);
           if (logs.length > logMaxLen) {
-            logs.value = logs.sublist(logs.length - logMaxLen);
+            logs.value = logs.sublist(logMaxLen);
           }
         });
         if (streamSubscription == null) {
@@ -80,15 +82,29 @@ class _ClashLogState extends State<ClashLog> {
                   itemBuilder: (cxt, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        logs[index],
-                      ),
+                      child: buildLogItem(logs[index]),
                     );
                   },
                   itemCount: logs.length,
                 )),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget buildLogItem(String log) {
+    final json = jsonDecode(log) ?? {};
+    return Stack(
+      children: [
+        Text(
+          json['payload'] ?? "",
+          style: TextStyle(fontFamily: 'nssc'),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: BrnStateTag(tagText: '${json['type']}'),
+        )
       ],
     );
   }

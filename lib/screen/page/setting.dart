@@ -22,7 +22,7 @@ class _SettingState extends State<Setting> {
                 title: Text("Proxy"),
                 tiles: [
                   SettingsTile.navigation(
-                    title: Text("proxy mode"),
+                    title: Text("Proxy mode"),
                     value: Text(config.value!.mode.toString()),
                     onPressed: (cxt) {
                       handleProxyMode();

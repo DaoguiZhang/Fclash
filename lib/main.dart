@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       title: 'Fclash',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      ),
+        fontFamily: 'nssc'),
       home: const MainScreen(),
     );
   }

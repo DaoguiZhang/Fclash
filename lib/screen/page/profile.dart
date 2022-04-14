@@ -25,6 +25,7 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: "add a subcription link.",
         onPressed: () {
           _addProfile();
         },
@@ -116,8 +117,8 @@ class _ProfileState extends State<Profile> {
       onItemClickInterceptor: (index, a) {
         switch (index) {
           case 0:
-            if (!isInUse) {
-              Get.find<ClashService>().changeYaml(config).then((value) {
+          // if (!isInUse) {
+            Get.find<ClashService>().changeYaml(config).then((value) {
                 if (value) {
                   Get.snackbar("Success", "update yaml config success!",
                       snackPosition: SnackPosition.BOTTOM);
@@ -127,7 +128,7 @@ class _ProfileState extends State<Profile> {
                       snackPosition: SnackPosition.BOTTOM);
                 }
               });
-            }
+              // }
             break;
           case 1:
             if (isInUse) {

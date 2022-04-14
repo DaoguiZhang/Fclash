@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen>
   }
 
   @override
-  void onTrayIconMouseDown() {
+  void onTrayIconMouseUp() {
     windowManager.show();
   }
 

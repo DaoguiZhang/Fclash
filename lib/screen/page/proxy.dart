@@ -18,19 +18,11 @@ class _ProxyState extends State<Proxy> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Get.find<ClashService>();
     return Container(
       decoration: BoxDecoration(color: Colors.white),
       child: Stack(
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Obx(() => BrnNoticeBar(
-                  content:
-                      'Current using: ${Get.find<ClashService>().currentYaml.value}')),
-              Expanded(child: Obx(() => buildTiles()))
-            ],
-          ),
           Opacity(
               opacity: 0.4,
               child: Align(
@@ -38,7 +30,30 @@ class _ProxyState extends State<Proxy> {
                   child: Image.asset(
                     "assets/images/network.png",
                     width: 300,
-                  )))
+                  ))),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Obx(() => BrnNoticeBar(
+                  content: 'Current using: ${cs.currentYaml.value}')),
+              Obx(() => BrnNoticeBar(
+                    noticeStyle: cs.isSystemProxyObs.value
+                        ? NoticeStyles.succeedWithArrow
+                        : NoticeStyles.warningWithArrow,
+                    content: cs.isSystemProxyObs.value
+                        ? "Fclash is running as system proxy now. Enjoy."
+                        : 'Fclash is not set as system proxy. Software may not automatically use Fclash proxy.',
+                    rightWidget: cs.isSystemProxyObs.value
+                        ? Offstage()
+                        : TextButton(
+                            onPressed: () {
+                              cs.setSystemProxy();
+                            },
+                            child: Text("set Fclash as system proxy")),
+                  )),
+              Expanded(child: Obx(() => buildTiles()))
+            ],
+          ),
         ],
       ),
     );
@@ -69,14 +84,51 @@ class _ProxyState extends State<Proxy> {
   }
 
   Widget buildSelector(Map<String, dynamic> selector) {
-    return BrnExpandableGroup(
-      title: selector['name'] ?? "",
-      subtitle: selector['now'],
+    final proxyName = selector['name'];
+    return Stack(
       children: [
-        buildSelectItem(selector),
-        // for debug
-        // kDebugMode ? BrnExpandableText(text: selector.toString(),maxLines: 1,textStyle: TextStyle(fontSize: 20,
-        // color: Colors.black),) : Offstage(),
+        BrnExpandableGroup(
+          title: proxyName ?? "",
+          subtitle: selector['now'],
+          themeData: BrnFormItemConfig(
+            titleTextStyle: BrnTextStyle(fontSize: 20),
+            subTitleTextStyle: BrnTextStyle(fontSize: 18),
+          ),
+          backgroundColor: Colors.transparent,
+          children: [
+            buildSelectItem(selector),
+            // for debug
+            // kDebugMode ? BrnExpandableText(text: selector.toString(),maxLines: 1,textStyle: TextStyle(fontSize: 20,
+            // color: Colors.black),) : Offstage(),
+          ],
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: TextButton(
+              onPressed: () async {
+                BrnLoadingDialog.show(context, barrierDismissible: false);
+                try {
+                  await Get.find<ClashService>().delay(proxyName).then((value) {
+                    if (value is int) {
+                      BrnToast.show(
+                          "$proxyName-${selector['now']}: $value ms", context);
+                    } else {
+                      BrnToast.show("Error: $proxyName: $value", context);
+                      // Tips.info("$proxyName: $value");
+                    }
+                  });
+                } finally {
+                  BrnLoadingDialog.dismiss(context);
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Test Delay",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              )),
+        )
       ],
     );
   }
@@ -92,12 +144,16 @@ class _ProxyState extends State<Proxy> {
       children: allItems.map((itemName) {
         return BrnRadioButton(
             radioIndex: index++,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                itemName,
-                style: TextStyle(fontSize: 20),
-              ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    itemName,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ],
             ),
             onValueChangedAtIndex: (newIndex, value) {
               Get.find<ClashService>()

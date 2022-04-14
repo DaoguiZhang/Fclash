@@ -15,6 +15,7 @@ import 'package:tray_manager/tray_manager.dart';
 
 class ClashService extends GetxService with TrayListener {
   static const clashBaseUrl = "http://127.0.0.1:22345";
+  static const clashExtBaseUrlCmd = "127.0.0.1:22345";
 
   // 运行时
   late Directory _clashDirectory;
@@ -41,6 +42,7 @@ class ClashService extends GetxService with TrayListener {
   // log
   Stream<List<int>>? logStream;
   RxMap<String, dynamic> proxies = RxMap();
+  RxBool isSystemProxyObs = RxBool(false);
 
   Future<bool> isRunning() async {
     try {
@@ -63,6 +65,8 @@ class ClashService extends GetxService with TrayListener {
     initializedMixedPort = SpUtil.getData('mixed-port', defValue: 12348);
     currentYaml.value = _;
     // init clash
+    // kill all other clash clients
+    stopClashSubP();
     Request.setBaseUrl(clashBaseUrl);
     _clashDirectory = await getApplicationSupportDirectory();
     _clashDirectory =
@@ -70,6 +74,7 @@ class ClashService extends GetxService with TrayListener {
 
     final clashBin = p.join(_clashDirectory.path, 'clash');
     final clashConf = p.join(_clashDirectory.path, currentYaml.value);
+    final countryMMdb = p.join(_clashDirectory.path, 'Country.mmdb');
     if (await isRunning()) {
       printError(
           info:
@@ -82,11 +87,20 @@ class ClashService extends GetxService with TrayListener {
       // copy executable to directory
       final exe = await rootBundle.load('assets/tp/clash/clash');
       final yaml = await rootBundle.load('assets/tp/clash/config.yaml');
+      final mmdb = await rootBundle.load('assets/tp/clash/Country.mmdb');
       // write to clash dir
       final exeF = File(clashBin);
-      await exeF.writeAsBytes(exe.buffer.asInt8List());
+      if (!exeF.existsSync()) {
+        await exeF.writeAsBytes(exe.buffer.asInt8List());
+      }
       final yamlF = File(clashConf);
-      await yamlF.writeAsBytes(yaml.buffer.asInt8List());
+      if (!yamlF.existsSync()) {
+        await yamlF.writeAsBytes(yaml.buffer.asInt8List());
+      }
+      final mmdbF = File(countryMMdb);
+      if (!mmdbF.existsSync()) {
+        await mmdbF.writeAsBytes(mmdb.buffer.asInt8List());
+      }
       // add permission
       final ret = Process.runSync('chmod', ['+x', clashBin], runInShell: true);
       if (ret.exitCode != 0) {
@@ -94,7 +108,15 @@ class ClashService extends GetxService with TrayListener {
             info: 'fclash: no permission to add execute flag to $clashBin');
       }
       _clashProcess = await Process.start(
-          clashBin, ['-d', _clashDirectory.path, '-f', clashConf],
+          clashBin,
+          [
+            '-d',
+            _clashDirectory.path,
+            '-f',
+            clashConf,
+            '-ext-ctl',
+            clashExtBaseUrlCmd
+          ],
           includeParentEnvironment: true,
           workingDirectory: _clashDirectory.path);
       _clashProcess?.stdout.listen((event) {
@@ -172,13 +194,14 @@ class ClashService extends GetxService with TrayListener {
     });
     // daemon
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      timer.cancel();
       isRunning().then((value) {
         if (!value) {
+          timer.cancel();
           // try to start clash backend again
           init();
         }
       });
+      isSystemProxyObs.value = isSystemProxy();
     });
     // system proxy
     // listen port
@@ -200,6 +223,8 @@ class ClashService extends GetxService with TrayListener {
   void closeClashDaemon() {
     Get.printInfo(info: 'fclash: closing daemon');
     _clashProcess?.kill();
+    // double check
+    stopClashSubP();
     if (isSystemProxy()) {
       clearSystemProxy();
     }
@@ -261,7 +286,10 @@ class ClashService extends GetxService with TrayListener {
       SpUtil.setData(field, value);
       return resp.statusCode == 204;
     } finally {
-      getCurrentClashConfig();
+      await getCurrentClashConfig();
+      if (field.endsWith("port") && isSystemProxy()) {
+        setSystemProxy();
+      }
     }
   }
 
@@ -391,6 +419,42 @@ class ClashService extends GetxService with TrayListener {
       }
       if (configEntity.value!.socksPort == 0) {
         await changeConfigField('socks-port', initializedSockPort);
+      }
+    }
+  }
+
+  Future<dynamic> delay(String proxyName,
+      {int timeout = 5000, String url = "https://www.google.com"}) async {
+    final resp = await Request.dioClient.get('/proxies/$proxyName/delay',
+        queryParameters: {"timeout": timeout, "url": url});
+    final data = jsonDecode(resp.data);
+    if (data['message'] != null) {
+      return data['message'];
+    }
+    return data['delay'] ?? -1;
+  }
+
+  /// stop clash by ps -A
+  /// ps -A | grep '[^f]clash' | awk '{print $1}' | xargs
+  ///
+  /// notice: is a double check in client mode
+  void stopClashSubP() {
+    final res = Process.runSync("ps", [
+      "-A",
+      "|",
+      "grep",
+      "'[^f]clash'",
+      "|",
+      "awk",
+      "'print \$1'",
+      "|",
+      "xrgs",
+    ]);
+    final clashPids = res.stdout.toString().split(" ");
+    for (final pid in clashPids) {
+      final pidInt = int.tryParse(pid);
+      if (pidInt != null) {
+        Process.killPid(int.parse(pid));
       }
     }
   }
