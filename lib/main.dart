@@ -1,4 +1,5 @@
 import 'package:fclash/screen/main_screen.dart';
+import 'package:fclash/service/autostart_service.dart';
 import 'package:fclash/service/clash_service.dart';
 import 'package:flutter/material.dart';
 import 'package:kommon/kommon.dart';
@@ -36,6 +37,7 @@ Future<void> initAppService() async {
   await SpUtil.getInstance();
   await Get.putAsync(() => ClashService().init());
   await Get.putAsync(() => DialogService().init());
+  await Get.putAsync(() => AutostartService().init());
 }
 
 class MyApp extends StatelessWidget {

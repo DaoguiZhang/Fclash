@@ -4,11 +4,17 @@ version: '1.0'
 summary: A Linux Clash Proxy Fronted based on Clash # 79 char long summary
 description: |
   A Linux Clash Proxy Fronted based on Clash. Supports subscriptions, proxies switcher, logger,
-  dynamic settings, profile management.
+  dynamic settings, profile management, auto start with system.
 
-grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs and slots
+grade: stable
+confinement: strict
 license: GPL-3.0+
+
+slots:
+  dbus-fclash:
+    interface: dbus
+    bus: session
+    name: cn.kingtous.fclash
 
 parts:
   fclash:
@@ -23,4 +29,8 @@ parts:
 apps:
   fclash:
     command: fclash
-    extensions: [ flutter-dev ]
+    extensions: [ flutter-stable ]
+    plugs:
+      - network
+    slots:
+      - dbus-fclash

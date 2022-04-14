@@ -43,6 +43,8 @@ dependencies:
   socket_io_client: ^1.0.2
   window_manager: ^0.2.1
   settings_ui: ^2.0.2
+  launch_at_startup: ^0.1.7
+  package_info_plus: ^1.4.2
 
 dev_dependencies:
   flutter_test:
