@@ -18,7 +18,7 @@ parts:
     build-packages:
       - libappindicator3-dev
     stage-packages:
-      - appindicator3-0.1
+      - libappindicator3-1
 
 apps:
   fclash:
