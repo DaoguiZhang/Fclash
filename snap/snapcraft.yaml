@@ -1,0 +1,21 @@
+name: fclash
+base: core20
+version: '1.0'
+summary: A Linux Clash Proxy Fronted based on Clash # 79 char long summary
+description: |
+  A Linux Clash Proxy Fronted based on Clash. Supports subscriptions, proxies switcher, logger,
+  dynamic settings, profile management.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+parts:
+  fclash:
+    plugin: flutter
+    source: https://github.com/Kingtous/fclash.git
+    flutter-target: lib/main.dart
+
+apps:
+  fclash:
+    command: fclash
+    extensions: [ flutter-dev ]
