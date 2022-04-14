@@ -4,6 +4,9 @@
 echo "build flutter package in $PWD"
 flutter build linux --release
 
+# create files
+mkdir -p ./debian/build-src/opt/apps/cn.kingtous.fclash/files
+
 # rm
 pushd ./debian/build-src/opt/apps/cn.kingtous.fclash/files || exit
 rm -rf ./*
