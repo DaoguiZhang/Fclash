@@ -13,6 +13,8 @@ jobs:
         with:
           flutter-version: '2.10.4'
           channel: 'stable'
+      - name: Enable Linux Desktop Support
+        run: flutter config --enable-linux-desktop
       - name: install dependencies
         run: sudo apt install -y libappindicator3-dev
       - name: build linux debian package
