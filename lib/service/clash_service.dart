@@ -344,6 +344,14 @@ class ClashService extends GetxService with TrayListener {
             title: "${m[k]['name']}: ${m[k]['now']}", isEnabled: false));
       }
     }
+    // port
+    if (configEntity.value != null) {
+      stringList.add(MenuItem(
+          title: 'http port: ${configEntity.value?.port}', isEnabled: false));
+      stringList.add(MenuItem(
+          title: 'socks port: ${configEntity.value?.socksPort}',
+          isEnabled: false));
+    }
     // system proxy
     stringList.add(MenuItem.separator);
     if (!isSystemProxy()) {
@@ -359,6 +367,7 @@ class ClashService extends GetxService with TrayListener {
           title: "Unset system proxy",
           toolTip: "click to reset system proxy",
           key: ACTION_UNSET_SYSTEM_PROXY));
+      stringList.add(MenuItem.separator);
     }
     initAppTray(details: stringList);
   }
