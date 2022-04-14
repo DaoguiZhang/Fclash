@@ -19,7 +19,7 @@ slots:
 parts:
   fclash:
     plugin: flutter
-    source: https://github.com/Kingtous/fclash.git
+    source: .
     flutter-target: lib/main.dart
     build-packages:
       - libappindicator3-dev
