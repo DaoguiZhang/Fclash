@@ -3,7 +3,7 @@ name: Snap Package
 on: push
 
 jobs:
-  my-job:
+  build-snap-package:
     runs-on: ubuntu-18.04
 
     steps:

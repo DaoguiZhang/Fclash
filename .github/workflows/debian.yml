@@ -1,0 +1,23 @@
+name: Build Debian Package
+
+on: push
+
+jobs:
+  build-debian-package:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.10.4'
+          channel: 'stable'
+      - name: install dependencies
+        run: sudo apt install -y libappindicator3-dev
+      - name: build linux debian package
+        run: ./build-deb.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cn.kingtous.fclash.deb
+          path: ./debian/cn.kingtous.fclash.deb
