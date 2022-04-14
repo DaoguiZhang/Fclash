@@ -17,18 +17,20 @@ class _SettingState extends State<Setting> {
     final config = Get.find<ClashService>().configEntity;
     return Obx(
           () => config.value == null
-          ? const BrnLoadingDialog()
+          ? const BrnLoadingDialog(
+              content: 'Loading',
+            )
           : SettingsList(platform: DevicePlatform.iOS, sections: [
-        SettingsSection(
-          title: Text("Proxy"),
-          tiles: [
-            SettingsTile.navigation(
-              title: Text("Proxy mode"),
-              value: Text(config.value!.mode.toString()),
-              onPressed: (cxt) {
-                handleProxyMode();
-              },
-            ),
+              SettingsSection(
+                title: Text("Proxy"),
+                tiles: [
+                  SettingsTile.navigation(
+                    title: Text("Proxy mode"),
+                    value: Text(config.value!.mode.toString()),
+                    onPressed: (cxt) {
+                      handleProxyMode();
+                    },
+                  ),
             SettingsTile.navigation(
               title: Text("Socks5 proxy port"),
               value: Text(config.value!.socksPort.toString()),
