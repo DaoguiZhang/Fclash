@@ -142,33 +142,37 @@ class _ProxyState extends State<Proxy> {
       alignment: WrapAlignment.start,
       crossAxisAlignment: WrapCrossAlignment.start,
       children: allItems.map((itemName) {
-        return BrnRadioButton(
-            radioIndex: index++,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    itemName,
-                    style: TextStyle(fontSize: 20),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: BrnRadioButton(
+              radioIndex: index++,
+              behavior: HitTestBehavior.opaque,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      itemName,
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            onValueChangedAtIndex: (newIndex, value) {
-              Get.find<ClashService>()
-                  .changeProxy(selectName, allItems[newIndex])
-                  .then((res) {
-                if (res) {
-                  BrnToast.show(
-                      'switch to ${allItems[newIndex]} success.', context);
-                } else {
-                  BrnToast.show(
-                      'switch to ${allItems[newIndex]} failed.', context);
-                }
-              });
-            },
-            isSelected: itemName == now);
+                ],
+              ),
+              onValueChangedAtIndex: (newIndex, value) {
+                Get.find<ClashService>()
+                    .changeProxy(selectName, allItems[newIndex])
+                    .then((res) {
+                  if (res) {
+                    BrnToast.show(
+                        'switch to ${allItems[newIndex]} success.', context);
+                  } else {
+                    BrnToast.show(
+                        'switch to ${allItems[newIndex]} failed.', context);
+                  }
+                });
+              },
+              isSelected: itemName == now),
+        );
       }).toList(growable: false),
     );
   }

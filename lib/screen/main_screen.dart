@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fclash/screen/component/speed.dart';
+import 'package:fclash/screen/page/about.dart';
 import 'package:fclash/screen/page/clash_log.dart';
 import 'package:fclash/screen/page/profile.dart';
 import 'package:fclash/screen/page/proxy.dart';
@@ -73,18 +74,17 @@ class _MainScreenState extends State<MainScreen>
   }
 
   Widget buildOptions() {
-    return SingleChildScrollView(
-      child: Row(
-        children: [
-          _buildOptions(0, 'Proxy'),
-          _buildOptions(1, 'Profile'),
-          _buildOptions(2, 'Setting'),
-          _buildOptions(3, 'Log'),
-          const Expanded(
-              child:
-                  Align(alignment: Alignment.centerRight, child: SpeedWidget()))
-        ],
-      ),
+    return Row(
+      children: [
+        _buildOptions(0, 'Proxy'),
+        _buildOptions(1, 'Profile'),
+        _buildOptions(2, 'Setting'),
+        _buildOptions(3, 'Log'),
+        _buildOptions(4, 'About'),
+        const Expanded(
+            child:
+                Align(alignment: Alignment.centerRight, child: SpeedWidget()))
+      ],
     );
   }
 
@@ -111,7 +111,13 @@ class _MainScreenState extends State<MainScreen>
     return Obx(
       () => IndexedStack(
         index: index.value,
-        children: const [Proxy(), Profile(), Setting(), ClashLog()],
+        children: const [
+          Proxy(),
+          Profile(),
+          Setting(),
+          ClashLog(),
+          AboutPage()
+        ],
       ),
     );
   }

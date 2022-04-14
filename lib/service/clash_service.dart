@@ -390,6 +390,8 @@ class ClashService extends GetxService with TrayListener {
               .downloadUri(uri, newProfilePath, onReceiveProgress: (i, t) {
         Get.printInfo(info: "$i/$t");
       });
+      // set subscription
+      await SpUtil.setData('profile_$name', url);
       return resp.statusCode == 200;
     } finally {
       final f = File(newProfilePath);
@@ -402,6 +404,7 @@ class ClashService extends GetxService with TrayListener {
   Future<bool> deleteProfile(FileSystemEntity config) async {
     if (config.existsSync()) {
       config.deleteSync();
+      await SpUtil.remove('profile_${basename(config.path)}');
       reload();
       return true;
     } else {
@@ -434,6 +437,13 @@ class ClashService extends GetxService with TrayListener {
     return data['delay'] ?? -1;
   }
 
+  /// yaml: test
+  String getSubscriptionLinkByYaml(String yaml) {
+    final url = SpUtil.getData('profile_$yaml', defValue: "");
+    Get.printInfo(info: 'subs link for $yaml: $url');
+    return url;
+  }
+
   /// stop clash by ps -A
   /// ps -A | grep '[^f]clash' | awk '{print $1}' | xargs
   ///
@@ -455,6 +465,36 @@ class ClashService extends GetxService with TrayListener {
       final pidInt = int.tryParse(pid);
       if (pidInt != null) {
         Process.killPid(int.parse(pid));
+      }
+    }
+  }
+
+  Future<bool> updateSubscription(String name) async {
+    final configName = '$name.yaml';
+    final newProfilePath = join(_clashDirectory.path, configName);
+    final url = SpUtil.getData('profile_$name');
+    try {
+      final uri = Uri.tryParse(url);
+      if (uri == null) {
+        return false;
+      }
+      // delete exists
+      final f = File(newProfilePath);
+      if (f.existsSync()) {
+        f.deleteSync();
+      }
+      final resp =
+          await Dio(BaseOptions(sendTimeout: 15000, receiveTimeout: 15000))
+              .downloadUri(uri, newProfilePath, onReceiveProgress: (i, t) {
+        Get.printInfo(info: "$i/$t");
+      });
+      // set subscription
+      await SpUtil.setData('profile_$name', url);
+      return resp.statusCode == 200;
+    } finally {
+      final f = File(newProfilePath);
+      if (f.existsSync()) {
+        await changeYaml(f);
       }
     }
   }

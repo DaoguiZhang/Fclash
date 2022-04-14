@@ -45,6 +45,8 @@ class _ProfileState extends State<Profile> {
         itemCount: configs.length,
         itemBuilder: (context, index) {
           final filename = basename(configs[index].path);
+          final key = basenameWithoutExtension(configs[index].path);
+          final link = Get.find<ClashService>().getSubscriptionLinkByYaml(key);
           return Obx(
             () => InkWell(
               onTap: () => handleProfileClicked(configs[index],
@@ -64,11 +66,42 @@ class _ProfileState extends State<Profile> {
                         width: 50,
                       ),
                       Expanded(
-                          child: Text(
-                        basename(
-                          configs[index].path,
-                        ),
-                        style: TextStyle(fontSize: 24),
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            basename(
+                              configs[index].path,
+                            ),
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          link.isEmpty
+                              ? Offstage()
+                              : TextButton(
+                                  onPressed: () async {
+                                    BrnLoadingDialog.show(context,
+                                        barrierDismissible: false,
+                                        content: 'Updating');
+                                    try {
+                                      final res = await Get.find<ClashService>()
+                                          .updateSubscription(key);
+                                      if (res) {
+                                        BrnToast.show(
+                                            'Update and apply settings success!',
+                                            context);
+                                      } else {
+                                        BrnToast.show(
+                                            'Update failed, please retry!',
+                                            context);
+                                      }
+                                    } finally {
+                                      BrnLoadingDialog.dismiss(context);
+                                    }
+                                  },
+                                  child: Tooltip(
+                                      message: '$link',
+                                      child: const Text("update subscription")))
+                        ],
                       )),
                       const Icon(Icons.keyboard_arrow_right)
                     ],
