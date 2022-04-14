@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# debian build
+/debian/build-src/opt/apps/cn.kingtous.fclash/files/**
+*/*.deb

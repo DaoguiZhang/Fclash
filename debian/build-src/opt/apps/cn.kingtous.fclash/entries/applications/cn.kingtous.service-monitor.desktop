@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Utility;Network;
+Comment=A Clash Proxy Fronted based on Clash
+Exec=/opt/apps/cn.kingtous.fclash/files/fclash %U
+GenericName=FClash
+Icon=cn.kingtous.fclash.png
+Name=FClash
+StartupNotify=true
+Type=Application
+X-Deepin-Vendor=kingtous

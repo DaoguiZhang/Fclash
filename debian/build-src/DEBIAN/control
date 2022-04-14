@@ -1,0 +1,9 @@
+Package: cn.kingtous.fclash
+Version: 1.0.0
+Architecture: amd64 
+Section: Network
+Maintainer: Kingtous
+Depends: libappindicator3-1
+Priority: optional
+Homepage: https://github.com/Kingtous/fclash
+Description: A Clash Proxy Fronted based on Clash
