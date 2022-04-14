@@ -9,14 +9,13 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
-      #      - name: Install dependencies
-      #        run: sudo apt-get install -y appindicator3-0.1 libappindicator3-dev
-
       - name: Use Snapcraft
         uses: snapcore/action-build@v1
         id: build
-
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cn.kingtous.fclash.snap
+          path: ${{ steps.build.outputs.snap }}
       - uses: snapcore/action-publish@v1
         with:
           store_login: ${{ secrets.SNAP_TOKEN }}
