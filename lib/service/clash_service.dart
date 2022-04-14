@@ -170,10 +170,10 @@ class ClashService extends GetxService with TrayListener {
         value.listen((event) {
           final msg = String.fromCharCodes(event);
           try {
-            final traffic_json = jsonDecode(msg);
+            final trafficJson = jsonDecode(msg);
             Get.printInfo(info: '[traffic]: $msg');
-            uploadRate.value = traffic_json['up'].toDouble() / 1024; // KB
-            downRate.value = traffic_json['down'].toDouble() / 1024; // KB
+            uploadRate.value = trafficJson['up'].toDouble() / 1024; // KB
+            downRate.value = trafficJson['down'].toDouble() / 1024; // KB
             updateTray();
           } catch (e) {
             Get.printError(info: '$e');
@@ -506,5 +506,13 @@ class ClashService extends GetxService with TrayListener {
         await changeYaml(f);
       }
     }
+  }
+
+  bool IshideWindowWhenStart() {
+    return SpUtil.getData('boot_window_hide', defValue: false);
+  }
+
+  Future<bool> setHideWindowWhenStart(bool hide) {
+    return SpUtil.setData('boot_window_hide', hide);
   }
 }

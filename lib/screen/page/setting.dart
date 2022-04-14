@@ -141,6 +141,15 @@ class _SettingState extends State<Setting> {
                         Get.find<AutostartService>().disableAutostart();
                       }
                     }),
+                SettingsTile.switchTile(
+                    title: const Text("Hide window when start fclash"),
+                    initialValue:
+                        Get.find<ClashService>().IshideWindowWhenStart(),
+                    onToggle: (e) async {
+                      setState(() {
+                        Get.find<ClashService>().setHideWindowWhenStart(e);
+                      });
+                    }),
               ])
       ]),
     );
