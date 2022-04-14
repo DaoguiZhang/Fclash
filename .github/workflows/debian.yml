@@ -16,7 +16,7 @@ jobs:
       - name: Enable Linux Desktop Support
         run: flutter config --enable-linux-desktop
       - name: install dependencies
-        run: sudo apt install -y libappindicator3-dev
+        run: sudo apt install -y libappindicator3-dev ninja-build build-essential
       - name: build linux debian package
         run: ./build-deb.sh
       - uses: actions/upload-artifact@v2
