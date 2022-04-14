@@ -8,12 +8,17 @@ description: |
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
+license: GPL-3.0+
 
 parts:
   fclash:
     plugin: flutter
     source: https://github.com/Kingtous/fclash.git
     flutter-target: lib/main.dart
+    build-packages:
+      - libappindicator3-dev
+    stage-packages:
+      - appindicator3-0.1
 
 apps:
   fclash:
