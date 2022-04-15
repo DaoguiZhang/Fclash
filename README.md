@@ -6,6 +6,8 @@
 <p align="center" style="font-size: 20px">A Clash Proxy Fronted based on Clash</p>
 <p align="center" style="font-size: 16px">Linux Supported</p>
 
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/fclash)
+
 ## Feature
 
 - Stable: Restart and restore clash status when clash kernel crashs automatically.
@@ -49,7 +51,7 @@
 - Snap Store(comming soon)
   - `sudo snap install fclash --classic`
 
-- Download binary files, go to [Github Action page](https://github.com/Kingtous/Fclash/actions).
+- Download DEB files, go to [Github Action page](https://github.com/Kingtous/Fclash/actions).
 
 ## Build from source
 
