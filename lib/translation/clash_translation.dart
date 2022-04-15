@@ -41,7 +41,9 @@ class ClashTranslations extends Translations {
               "Input a valid subscription link url",
           "What is your config name": "What is your config name",
           'version:': "version: @version",
-          "Author:": "Author: @name"
+          "Author:": "Author: @name",
+          "Download speed": "Download: @speed",
+          "Upload speed": "Upload: @speed",
         },
         'zh_CN': {
           "http_port": "HTTP端口",
@@ -114,7 +116,16 @@ class ClashTranslations extends Translations {
           "Socks5 proxy port": "Socks5代理端口",
           'Enter custom port for Socks5 proxy port': "输入自定义Socks5代理端口",
           "Loading": "加载中",
-          "Proxy mode": "代理模式"
+          "Proxy mode": "代理模式",
+          "Show Fclash": "显示Fclash",
+          'Exit Fclash': '退出Fclash',
+          "click to set fclash as system proxy": "点击将Fclash设置为系统代理",
+          "Not system proxy yet.": "Fclash还不是系统代理",
+          "Unset system proxy": "取消Fclash系统代理",
+          "click to reset system proxy": "点击重置Fclash系统代理",
+          "Download speed": "下载: @speed",
+          "Upload speed": "上传: @speed",
+          "System proxy now.": "现在Fclash是系统代理"
         }
       };
 }

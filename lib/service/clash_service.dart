@@ -334,10 +334,12 @@ class ClashService extends GetxService with TrayListener {
     stringList.add(
         MenuItem(title: "profile: ${currentYaml.value}", isEnabled: false));
     stringList.add(MenuItem(
-        title: "Download: ${downRate.value.toStringAsFixed(1)}KB/s",
+        title: "Download speed"
+            .trParams({"speed": " ${downRate.value.toStringAsFixed(1)}KB/s"}),
         isEnabled: false));
     stringList.add(MenuItem(
-        title: "Upload: ${uploadRate.value.toStringAsFixed(1)}KB/s",
+        title: "Upload speed"
+            .trParams({"speed": "${uploadRate.value.toStringAsFixed(1)}KB/s"}),
         isEnabled: false));
     // status
     if (proxies['proxies'] != null) {
@@ -351,24 +353,23 @@ class ClashService extends GetxService with TrayListener {
     // port
     if (configEntity.value != null) {
       stringList.add(MenuItem(
-          title: 'http port: ${configEntity.value?.port}', isEnabled: false));
+          title: 'http: ${configEntity.value?.port}', isEnabled: false));
       stringList.add(MenuItem(
-          title: 'socks port: ${configEntity.value?.socksPort}',
-          isEnabled: false));
+          title: 'socks: ${configEntity.value?.socksPort}', isEnabled: false));
     }
     // system proxy
     stringList.add(MenuItem.separator);
     if (!isSystemProxy()) {
       stringList
-          .add(MenuItem(title: "Not system proxy yet.", isEnabled: false));
+          .add(MenuItem(title: "Not system proxy yet.".tr, isEnabled: false));
       stringList.add(MenuItem(
-          title: "Set as system proxy",
-          toolTip: "click to set fclash as system proxy",
+          title: "Set as system proxy".tr,
+          toolTip: "click to set fclash as system proxy".tr,
           key: ACTION_SET_SYSTEM_PROXY));
     } else {
-      stringList.add(MenuItem(title: "System proxy now.", isEnabled: false));
+      stringList.add(MenuItem(title: "System proxy now.".tr, isEnabled: false));
       stringList.add(MenuItem(
-          title: "Unset system proxy",
+          title: "Unset system proxy".tr,
           toolTip: "click to reset system proxy",
           key: ACTION_UNSET_SYSTEM_PROXY));
       stringList.add(MenuItem.separator);

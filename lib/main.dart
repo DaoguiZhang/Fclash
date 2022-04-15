@@ -18,18 +18,19 @@ void main() async {
 }
 
 void initAppTray({List<MenuItem>? details, bool isUpdate = false}) async {
-  if (!isUpdate) {
-    await trayManager.setIcon('assets/images/app_tray.jpeg');
-  }
+  // if (!isUpdate) {
+  //   // TODO
+  // }
+  await trayManager.setIcon('assets/images/app_tray.jpeg');
   List<MenuItem> items = [
     MenuItem(
       key: 'show',
-      title: 'Show Fclash',
+      title: 'Show Fclash'.tr,
     ),
     MenuItem.separator,
     MenuItem(
       key: 'exit',
-      title: 'Exit Fclash',
+      title: 'Exit Fclash'.tr,
     ),
   ];
   if (details != null) {
