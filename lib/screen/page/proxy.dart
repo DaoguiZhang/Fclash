@@ -35,21 +35,23 @@ class _ProxyState extends State<Proxy> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Obx(() => BrnNoticeBar(
-                  content: 'Current using: ${cs.currentYaml.value}')),
+                  content: 'Current using'
+                      .trParams({"name": cs.currentYaml.value}))),
               Obx(() => BrnNoticeBar(
                     noticeStyle: cs.isSystemProxyObs.value
                         ? NoticeStyles.succeedWithArrow
                         : NoticeStyles.warningWithArrow,
                     content: cs.isSystemProxyObs.value
-                        ? "Fclash is running as system proxy now. Enjoy."
-                        : 'Fclash is not set as system proxy. Software may not automatically use Fclash proxy.',
+                        ? "Fclash is running as system proxy now. Enjoy.".tr
+                        : 'Fclash is not set as system proxy. Software may not automatically use Fclash proxy.'
+                            .tr,
                     rightWidget: cs.isSystemProxyObs.value
                         ? Offstage()
                         : TextButton(
                             onPressed: () {
                               cs.setSystemProxy();
                             },
-                            child: Text("set Fclash as system proxy")),
+                            child: Text("set Fclash as system proxy".tr)),
                   )),
               Expanded(child: Obx(() => buildTiles()))
             ],
@@ -63,7 +65,7 @@ class _ProxyState extends State<Proxy> {
     final c = Get.find<ClashService>().proxies;
     if (c.value == null) {
       return BrnAbnormalStateWidget(
-        title: 'No Proxies',
+        title: 'No Proxies'.tr,
         content: 'Select a profile to show proxies.',
       );
     }
@@ -121,11 +123,12 @@ class _ProxyState extends State<Proxy> {
                   BrnLoadingDialog.dismiss(context);
                 }
               },
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Test Delay",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  "Test Delay".tr,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               )),
         )
@@ -153,7 +156,7 @@ class _ProxyState extends State<Proxy> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       itemName,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
                 ],
@@ -164,10 +167,14 @@ class _ProxyState extends State<Proxy> {
                     .then((res) {
                   if (res) {
                     BrnToast.show(
-                        'switch to ${allItems[newIndex]} success.', context);
+                        'switch to name success.'
+                            .trParams({"name": "${allItems[newIndex]}"}),
+                        context);
                   } else {
                     BrnToast.show(
-                        'switch to ${allItems[newIndex]} failed.', context);
+                        'switch to name failed.'
+                            .trParams({"name": "${allItems[newIndex]}"}),
+                        context);
                   }
                 });
               },

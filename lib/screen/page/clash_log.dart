@@ -32,8 +32,8 @@ class _ClashLogState extends State<ClashLog> {
         }
         streamSubscription =
             Get.find<ClashService>().logStream?.listen((event) {
-          final logStr = String.fromCharCodes(event);
-          Get.printInfo(info: 'Log widget: ${logStr}');
+          final logStr = utf8.decode(event);
+          Get.printInfo(info: 'Log widget: $logStr');
           logs.insert(0, logStr);
           if (logs.length > logMaxLen) {
             logs.value = logs.sublist(logMaxLen);
@@ -42,7 +42,7 @@ class _ClashLogState extends State<ClashLog> {
         if (streamSubscription == null) {
           // printInfo(info: 'log service retry');
         } else {
-          printInfo(info: 'log service connected');
+          printInfo(info: 'log service connected'.tr);
           connected.value = true;
         }
       } else {
@@ -66,8 +66,8 @@ class _ClashLogState extends State<ClashLog> {
         Obx(
           () => BrnNoticeBar(
             content: connected.value
-                ? 'Log is running. Any logs will show below.'
-                : "No Logs currently / Connecting to clash log daemon...",
+                ? 'Log is running. Any logs will show below.'.tr
+                : "No Logs currently / Connecting to clash log daemon...".tr,
             showLeftIcon: true,
             showRightIcon: true,
             noticeStyle: connected.value

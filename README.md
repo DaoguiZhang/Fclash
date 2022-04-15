@@ -11,6 +11,7 @@
 - Stable: Restart and restore clash status when clash kernel crashs automatically.
 - Stable: Monitor Realtime runtime status.
 - UI: Beautiful UI built by Flutter.
+- UI: Chinese/English localizations supported.
 - Functions: Easy to set/unset as system proxy.
 - Functions: Full customized setting, proxy mode, ports, LAN connection, ipv6, etc.
 - Functions: Switch yaml configs in realtime.
@@ -45,6 +46,11 @@
 
 ## Install
 
-- build and run by flutter and gtk.
+- Snap Store(comming soon)
+  - `sudo snap install fclash --classic`
 
-- Download binary files, go to release page(comming soon).
+- Download binary files, go to [Github Action page](https://github.com/Kingtous/Fclash/actions).
+
+## Build from source
+
+FClash depends `libappindicatior3-dev` when compiling.

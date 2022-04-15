@@ -14,7 +14,7 @@ class SpeedWidget extends StatelessWidget {
               backgroundColor: Colors.transparent,
               itemChildren: [
                 BrnNumberInfoItemModel(
-                    preDesc: "Download ",
+                    preDesc: "Download".tr,
                     number: Get.find<ClashService>()
                         .downRate
                         .value
@@ -28,7 +28,7 @@ class SpeedWidget extends StatelessWidget {
               backgroundColor: Colors.transparent,
               itemChildren: [
                 BrnNumberInfoItemModel(
-                    preDesc: "Upload ",
+                    preDesc: "Upload".tr,
                     number: Get.find<ClashService>()
                         .uploadRate
                         .value

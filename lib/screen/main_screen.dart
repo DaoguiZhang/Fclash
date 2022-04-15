@@ -76,11 +76,11 @@ class _MainScreenState extends State<MainScreen>
   Widget buildOptions() {
     return Row(
       children: [
-        _buildOptions(0, 'Proxy'),
-        _buildOptions(1, 'Profile'),
-        _buildOptions(2, 'Setting'),
-        _buildOptions(3, 'Log'),
-        _buildOptions(4, 'About'),
+        _buildOptions(0, 'Proxy'.tr),
+        _buildOptions(1, 'Profile'.tr),
+        _buildOptions(2, 'Setting'.tr),
+        _buildOptions(3, 'Log'.tr),
+        _buildOptions(4, 'About'.tr),
         const Expanded(
             child:
                 Align(alignment: Alignment.centerRight, child: SpeedWidget()))

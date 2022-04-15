@@ -135,6 +135,8 @@ class ClashService extends GetxService with TrayListener {
         initDaemon();
       }
     });
+    // tray show issue
+    trayManager.addListener(this);
     return this;
   }
 
@@ -174,6 +176,8 @@ class ClashService extends GetxService with TrayListener {
             Get.printInfo(info: '[traffic]: $msg');
             uploadRate.value = trafficJson['up'].toDouble() / 1024; // KB
             downRate.value = trafficJson['down'].toDouble() / 1024; // KB
+            // fix: 只有KDE不会导致Tray自动消失
+            // final desktop = Platform.environment['XDG_CURRENT_DESKTOP'];
             updateTray();
           } catch (e) {
             Get.printError(info: '$e');
@@ -189,7 +193,7 @@ class ClashService extends GetxService with TrayListener {
         print("log stream opened success");
       }
       logStream?.listen((event) {
-        Get.printInfo(info: '[LOG]: ${String.fromCharCodes(event)}');
+        Get.printInfo(info: '[LOG]: ${utf8.decode(event)}');
       });
     });
     // daemon
@@ -369,7 +373,7 @@ class ClashService extends GetxService with TrayListener {
           key: ACTION_UNSET_SYSTEM_PROXY));
       stringList.add(MenuItem.separator);
     }
-    initAppTray(details: stringList);
+    initAppTray(details: stringList, isUpdate: true);
   }
 
   @override
@@ -489,14 +493,23 @@ class ClashService extends GetxService with TrayListener {
       }
       // delete exists
       final f = File(newProfilePath);
-      if (f.existsSync()) {
-        f.deleteSync();
-      }
+      final tmpF = File('$newProfilePath.tmp');
+
       final resp =
           await Dio(BaseOptions(sendTimeout: 15000, receiveTimeout: 15000))
-              .downloadUri(uri, newProfilePath, onReceiveProgress: (i, t) {
+              .downloadUri(uri, tmpF.path, onReceiveProgress: (i, t) {
         Get.printInfo(info: "$i/$t");
+      }).catchError((e) {
+        if (tmpF.existsSync()) {
+          tmpF.deleteSync();
+        }
       });
+      if (resp.statusCode == 200) {
+        if (f.existsSync()) {
+          f.deleteSync();
+        }
+        tmpF.renameSync(f.path);
+      }
       // set subscription
       await SpUtil.setData('profile_$name', url);
       return resp.statusCode == 200;

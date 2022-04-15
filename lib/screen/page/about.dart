@@ -24,23 +24,29 @@ class AboutPage extends StatelessWidget {
               LaunchUtils.openUrl("https://github.com/Kingtous/Fclash");
             },
             child: Text(
-              "Fclash - a clash proxy fronted by Flutter",
-              style: TextStyle(fontSize: 20),
+              "Fclash - a clash proxy fronted by Flutter".tr,
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Text(
-            "version: v1.0",
+            "version:".trParams({"version": "v1.0.0"}),
             style: TextStyle(fontSize: 20),
           ),
-          Divider(
+          TextButton(
+              onPressed: () {
+                LaunchUtils.openUrl(
+                    "https://github.com/Kingtous/Fclash/actions");
+              },
+              child: Text("check for update".tr)),
+          const Divider(
             thickness: 1.0,
           ),
-          Text("Author: Kingtous"),
+          Text("Author:".trParams({"name": "Kingtous"})),
           TextButton(
               onPressed: () {
                 LaunchUtils.openUrl("https://github.com/Kingtous");
               },
-              child: Text("View me at Github"))
+              child: Text("View me at Github".tr))
         ],
       ),
     );
