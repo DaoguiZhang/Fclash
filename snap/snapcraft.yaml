@@ -7,7 +7,7 @@ description: |
   dynamic settings, profile management, auto start with system.
 
 grade: stable
-confinement: devmode
+confinement: strict
 license: GPL-3.0+
 
 slots:

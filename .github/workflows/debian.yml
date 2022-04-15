@@ -1,6 +1,12 @@
 name: Build Debian Package
 
-on: push
+on:
+  push:
+    paths-ignore:
+      - README.md
+      - snap/**
+      - .github/**
+      - docs/**
 
 jobs:
   build-debian-package:
