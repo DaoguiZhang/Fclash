@@ -31,3 +31,9 @@ jobs:
         with:
           name: cn.kingtous.fclash.deb
           path: ./debian/cn.kingtous.fclash.deb
+      - uses: ncipollo/release-action@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          artifacts: "debian/cn.kingtous.fclash.deb"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
