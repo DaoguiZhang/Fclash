@@ -7,6 +7,8 @@ on:
       - snap/**
       - .github/**
       - docs/**
+      - PKGBUILD
+      - LICENSE
 
 jobs:
   build-debian-package:
