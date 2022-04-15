@@ -6,7 +6,14 @@
 <p align="center" style="font-size: 20px">A Clash Proxy Fronted based on Clash</p>
 <p align="center" style="font-size: 16px">Linux Supported</p>
 
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/fclash)
+## Install
+
+- For Arch/Manjaro users, using AUR
+  - `yay -S fclash`
+- For Ubuntu/Debian users, download deb files directly
+  - [https://github.com/Kingtous/Fclash/releases](https://github.com/Kingtous/Fclash/releases)
+- For other distro users, using snap app.
+  - [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/fclash)
 
 ## Feature
 

@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - stable
+    paths-ignore:
+      - README.md
+      - snap/**
+      - .github/**
+      - docs/**
+      - PKGBUILD
+      - .SRCINFO
+      - LICENSE
 
 jobs:
   build-snap-package:

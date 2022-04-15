@@ -8,6 +8,7 @@ on:
       - .github/**
       - docs/**
       - PKGBUILD
+      - .SRCINFO
       - LICENSE
 
 jobs:
