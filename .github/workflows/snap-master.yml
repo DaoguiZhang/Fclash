@@ -3,10 +3,9 @@ name: Snap Package
 on:
   push:
     branches:
-      - stable
+      - master
     paths-ignore:
       - README.md
-      - snap/**
       - .github/**
       - docs/**
       - PKGBUILD
@@ -14,7 +13,7 @@ on:
       - LICENSE
 
 jobs:
-  build-snap-package:
+  build-snap-master-package:
     runs-on: ubuntu-18.04
 
     steps:

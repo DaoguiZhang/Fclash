@@ -7,7 +7,7 @@ description: |
   dynamic settings, profile management, auto start with system.
 
 grade: stable
-confinement: strict
+confinement: devmode
 license: GPL-3.0+
 
 slots:
@@ -32,5 +32,11 @@ apps:
     extensions: [ flutter-stable ]
     plugs:
       - network
+      - home
+      - gsettings
+      - desktop
+      - opengl
+      - x11
+      - wayland
     slots:
       - dbus-fclash

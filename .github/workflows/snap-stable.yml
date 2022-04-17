@@ -1,0 +1,33 @@
+name: Snap Package
+
+on:
+  push:
+    branches:
+      - stable
+    paths-ignore:
+      - README.md
+      - .github/**
+      - docs/**
+      - PKGBUILD
+      - .SRCINFO
+      - LICENSE
+
+jobs:
+  build-snap-package:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Use Snapcraft
+        uses: snapcore/action-build@v1
+        id: build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cn.kingtous.fclash.snap
+          path: ${{ steps.build.outputs.snap }}
+      - uses: snapcore/action-publish@v1
+        with:
+          store_login: ${{ secrets.SNAP_TOKEN }}
+          snap: ${{ steps.build.outputs.snap }}
+          release: stable
