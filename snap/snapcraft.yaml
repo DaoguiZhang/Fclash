@@ -10,11 +10,11 @@ grade: stable
 confinement: devmode
 license: GPL-3.0+
 
-slots:
-  dbus-fclash:
-    interface: dbus
-    bus: session
-    name: cn.kingtous.fclash
+#slots:
+#  dbus-fclash:
+#    interface: dbus
+#    bus: session
+#    name: cn.kingtous.fclash
 
 parts:
   fclash:
@@ -38,5 +38,5 @@ apps:
       - opengl
       - x11
       - wayland
-    slots:
-      - dbus-fclash
+    #slots:
+    #  - dbus-fclash
