@@ -53,6 +53,7 @@ apps:
       - home
       - gsettings
       - desktop
+      - desktop-legacy
       - opengl
       - x11
       - wayland
