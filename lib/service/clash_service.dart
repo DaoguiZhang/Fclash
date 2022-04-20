@@ -71,7 +71,7 @@ class ClashService extends GetxService with TrayListener {
     _clashDirectory = await getApplicationSupportDirectory();
     _clashDirectory =
         Directory.fromUri(Uri.parse(p.join(_clashDirectory.path, "clash")));
-
+    print("fclash work directory: ${_clashDirectory.path}");
     final clashBin = p.join(_clashDirectory.path, 'clash');
     final clashConf = p.join(_clashDirectory.path, currentYaml.value);
     final countryMMdb = p.join(_clashDirectory.path, 'Country.mmdb');

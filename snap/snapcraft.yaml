@@ -7,7 +7,7 @@ description: |
   dynamic settings, profile management, auto start with system.
 
 grade: stable
-confinement: devmode
+confinement: strict
 license: GPL-3.0+
 
 #slots:
@@ -15,6 +15,9 @@ license: GPL-3.0+
 #    interface: dbus
 #    bus: session
 #    name: cn.kingtous.fclash
+
+architectures:
+  - build-on: amd64
 
 parts:
   fclash:
@@ -53,5 +56,14 @@ apps:
       - opengl
       - x11
       - wayland
+      - unity7
+      # manually connect by snap
+      - system-observe
+      - network-observe
+      - network-control
+      - network-status
+      # end clash subprocess
+      - process-control
+      - personal-files
     #slots:
     #  - dbus-fclash
