@@ -64,6 +64,5 @@ apps:
       - network-status
       # end clash subprocess
       - process-control
-      - personal-files
     #slots:
     #  - dbus-fclash
