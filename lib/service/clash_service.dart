@@ -163,6 +163,7 @@ class ClashService extends GetxService with TrayListener {
     await getCurrentClashConfig();
     // proxies
     await getProxies();
+    updateTray();
   }
 
   void initDaemon() async {
@@ -180,7 +181,7 @@ class ClashService extends GetxService with TrayListener {
             downRate.value = trafficJson['down'].toDouble() / 1024; // KB
             // fix: 只有KDE不会导致Tray自动消失
             // final desktop = Platform.environment['XDG_CURRENT_DESKTOP'];
-            updateTray();
+            // updateTray();
           } catch (e) {
             Get.printError(info: '$e');
           }
@@ -296,6 +297,7 @@ class ClashService extends GetxService with TrayListener {
       if (field.endsWith("port") && isSystemProxy()) {
         setSystemProxy();
       }
+      updateTray();
     }
   }
 
