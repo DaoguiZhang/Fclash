@@ -6,6 +6,8 @@
 <p align="center" style="font-size: 20px">A Clash Proxy Fronted based on Clash</p>
 <p align="center" style="font-size: 16px">Linux Supported</p>
 
+[![fclash](https://snapcraft.io/fclash/badge.svg)](https://snapcraft.io/fclash)
+
 ## Install
 
 - For Arch/Manjaro users, using AUR

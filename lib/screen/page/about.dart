@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kommon/kommon.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -28,9 +29,19 @@ class AboutPage extends StatelessWidget {
               style: const TextStyle(fontSize: 20),
             ),
           ),
-          Text(
-            "version:".trParams({"version": "v1.0.0"}),
-            style: TextStyle(fontSize: 20),
+          FutureBuilder(
+            future: PackageInfo.fromPlatform(),
+            builder: (context, snap) {
+              if (snap.hasData) {
+                PackageInfo info = snap.data as PackageInfo;
+                return Text(
+                  "version:".trParams({"version": info.version}),
+                  style: const TextStyle(fontSize: 20),
+                );
+              } else {
+                return const BrnLoadingDialog();
+              }
+            },
           ),
           TextButton(
               onPressed: () {
