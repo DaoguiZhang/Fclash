@@ -1,6 +1,7 @@
 import 'package:fclash/screen/main_screen.dart';
 import 'package:fclash/service/autostart_service.dart';
 import 'package:fclash/service/clash_service.dart';
+import 'package:fclash/service/notification_service.dart';
 import 'package:fclash/translation/clash_translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ void initAppTray({List<MenuItem>? details, bool isUpdate = false}) async {
 Future<void> initAppService() async {
   await windowManager.setPreventClose(true);
   await SpUtil.getInstance();
+  await Get.putAsync(() => NotificationService().init());
   await Get.putAsync(() => ClashService().init());
   await Get.putAsync(() => DialogService().init());
   await Get.putAsync(() => AutostartService().init());

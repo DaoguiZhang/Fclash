@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:fclash/bean/clash_config_entity.dart';
 import 'package:fclash/main.dart';
+import 'package:fclash/service/notification_service.dart';
 import 'package:flutter/services.dart';
 import 'package:kommon/kommon.dart';
 import 'package:path/path.dart';
@@ -76,9 +77,10 @@ class ClashService extends GetxService with TrayListener {
     final clashConf = p.join(_clashDirectory.path, currentYaml.value);
     final countryMMdb = p.join(_clashDirectory.path, 'Country.mmdb');
     if (await isRunning()) {
-      printError(
-          info:
-              "running Fclash in client mode. clash is not handled by Fclash!");
+      print("FClash is already running, exiting.");
+      await Get.find<NotificationService>().showNotification(
+          'Already running.'.tr, 'Fclash is running or ports is in use'.tr);
+      exit(0);
     } else {
       print("running Fclash in standalone mode.");
       if (!await _clashDirectory.exists()) {
@@ -333,14 +335,15 @@ class ClashService extends GetxService with TrayListener {
     // yaml
     stringList.add(
         MenuItem(title: "profile: ${currentYaml.value}", isEnabled: false));
-    stringList.add(MenuItem(
-        title: "Download speed"
-            .trParams({"speed": " ${downRate.value.toStringAsFixed(1)}KB/s"}),
-        isEnabled: false));
-    stringList.add(MenuItem(
-        title: "Upload speed"
-            .trParams({"speed": "${uploadRate.value.toStringAsFixed(1)}KB/s"}),
-        isEnabled: false));
+    // FIX: DDE menu issue
+    // stringList.add(MenuItem(
+    //     title: "Download speed"
+    //         .trParams({"speed": " ${downRate.value.toStringAsFixed(1)}KB/s"}),
+    //     isEnabled: false));
+    // stringList.add(MenuItem(
+    //     title: "Upload speed"
+    //         .trParams({"speed": "${uploadRate.value.toStringAsFixed(1)}KB/s"}),
+    //     isEnabled: false));
     // status
     if (proxies['proxies'] != null) {
       Map<String, dynamic> m = proxies['proxies'];

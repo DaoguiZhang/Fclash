@@ -44,6 +44,8 @@ class ClashTranslations extends Translations {
           "Author:": "Author: @name",
           "Download speed": "Download: @speed",
           "Upload speed": "Upload: @speed",
+          "Already running.": "Fclash is already running.",
+          "Fclash is running or ports is in use": "Exiting."
         },
         'zh_CN': {
           "http_port": "HTTP端口",
@@ -125,7 +127,9 @@ class ClashTranslations extends Translations {
           "click to reset system proxy": "点击重置Fclash系统代理",
           "Download speed": "下载: @speed",
           "Upload speed": "上传: @speed",
-          "System proxy now.": "现在Fclash是系统代理"
+          "System proxy now.": "现在Fclash是系统代理",
+          "Already running.": "Fclash 已经在运行中",
+          "Fclash is running or ports is in use": "无需重复运行"
         }
       };
 }
