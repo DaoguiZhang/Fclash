@@ -28,6 +28,7 @@ parts:
       - libappindicator3-dev
     stage-packages:
       - libappindicator3-1
+      - libgl1-mesa-dri
 
 plugs:
   gsettings:
