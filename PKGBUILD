@@ -33,5 +33,5 @@ build() {
 
 package() {
     cp -r "${srcdir}/extract/opt"  "${pkgdir}/opt"
-	install -Dm0755 "${srcdir}/${pkgname%-git}/debian/build-src/opt/apps/cn.kingtous.fclash/entries/applications/cn.kingtous.service-monitor.desktop" "${pkgdir}/usr/share/applications/cn.kingtous.service-monitor.desktop"
+	install -Dm0755 "${srcdir}/${pkgname%-git}/debian/build-src/opt/apps/cn.kingtous.fclash/entries/applications/cn.kingtous.fclash.desktop" "${pkgdir}/usr/share/applications/cn.kingtous.fclash.desktop"
 }
