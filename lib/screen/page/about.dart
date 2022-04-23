@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kommon/kommon.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -13,9 +12,9 @@ class AboutPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50.0),
-            child: CircleAvatar(
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 50.0),
+            child: const CircleAvatar(
               foregroundImage: AssetImage("assets/images/app_tray.jpeg"),
               radius: 100,
             ),
@@ -29,19 +28,9 @@ class AboutPage extends StatelessWidget {
               style: const TextStyle(fontSize: 20),
             ),
           ),
-          FutureBuilder(
-            future: PackageInfo.fromPlatform(),
-            builder: (context, snap) {
-              if (snap.hasData) {
-                PackageInfo info = snap.data as PackageInfo;
-                return Text(
-                  "version:".trParams({"version": info.version}),
-                  style: const TextStyle(fontSize: 20),
-                );
-              } else {
-                return const BrnLoadingDialog();
-              }
-            },
+          Text(
+            "version:".trParams({"version": '1.2.1-1'}),
+            style: const TextStyle(fontFamily: 'nssc'),
           ),
           TextButton(
               onPressed: () {

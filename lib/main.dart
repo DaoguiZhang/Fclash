@@ -47,6 +47,7 @@ Future<void> initAppService() async {
   await Get.putAsync(() => ClashService().init());
   await Get.putAsync(() => DialogService().init());
   await Get.putAsync(() => AutostartService().init());
+
   // hide window when start
   if (Get.find<ClashService>().IshideWindowWhenStart()) {
     await windowManager.hide();
