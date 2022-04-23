@@ -1,6 +1,6 @@
 name: fclash
 base: core18
-version: '1.2.1'
+version: '1.2.2-2'
 summary: A Linux Clash Proxy Fronted based on Clash # 79 char long summary
 description: |
   A Linux Clash Proxy Fronted based on Clash. Supports subscriptions, proxies switcher, logger,

@@ -17,6 +17,11 @@ function change_arch() {
   echo "please change arch version manually for now."
 }
 
+# version: '1.2.1'
+function change_snap() {
+  sed -i "s/version:\s*'${version_pattern}'/version: '$1'/" snap/snapcraft.yaml
+}
+
 if [[ ! $1 =~ ${version_pattern} ]]; then
   echo './set_version.sh *.*.*[-*]'
   exit 0
@@ -29,6 +34,10 @@ change_about_version "$1"
 # Deb
 echo "change deb info."
 change_deb_version "$1"
+
+# Snap
+echo "change snapcraft info."
+change_snap "$1"
 
 # Arch
 echo "change arch info."

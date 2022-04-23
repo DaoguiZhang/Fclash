@@ -1,7 +1,7 @@
 {
 "appid": "cn.kingtous.fclash",
 "name": "FClash",
-"version": "1.2.2",
+"version": "1.2.2-2",
 "arch": ["amd64"],
 "permissions": {
 "autostart": true,
